@@ -4,6 +4,7 @@ Date: april/19/2023
 
 See this project on https://htsnet-avaliacaoredacao-app-4vysvn.streamlit.app/   
 
+![Alt text](tela_site.jpg)
 
 ------ Instructions ------
 pip install virtualenv
