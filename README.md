@@ -2,7 +2,7 @@ Project: Project in Python using ChatGPT for text processing, using Streamlit fo
 Autor: Hamilton Tenório da Silva
 Date: april/19/2023
 
-See this project on 
+See this project on https://htsnet-avaliacaoredacao-app-4vysvn.streamlit.app/   
 
 
 ------ Instructions ------

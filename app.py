@@ -26,7 +26,7 @@ with st.sidebar:
     # st.write('Limit of words for the response.')
     
     prompt = ''
-    prompt_base = """Tópico: avaliação de questionário.
+    prompt_base = """Tópico: avaliação de redação.
                     Persona: seja um professor de língua portuguesa e avalie a redação abaixo.
                     Contexto: Redação de aluno do 1º ano do Ensino Médio do Brasil
                     O que avaliar (num máximo de 100 pontos com as seguintes ponderações):
@@ -62,15 +62,22 @@ def check_text(text1, text2):
     st.info('Um dos campos está vazio ou o tamanhos dos textos ultrapassou o limite viável!', icon="⚠️")
     return False
 
-
+def atualizaUsado():
+    usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}')
+    if max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) <= 0:
+        st.info('O tamanhos dos textos ultrapassou o limite possível!', icon="⚠️")
 
 # título
 Title = f'Avaliação de Redação (ChatGPT)'
 st.title(Title)
 
-prompt = st.text_area("Tema", value=prompt_base, max_chars=800, height=100, key='prompt_area_field')
-tema = st.text_area("Tema", max_chars=800, height=100, key='theme_area_field')
-redacao = st.text_area("Redação", max_chars=3200, height=400, key='speech_area_field')
+prompt = st.text_area("Tema", value=prompt_base, max_chars=800, height=200, key='prompt_area_field', on_change=atualizaUsado)
+tema = st.text_area("Tema", max_chars=800, height=100, key='theme_area_field', on_change=atualizaUsado)
+redacao = st.text_area("Redação", max_chars=3200, height=400, key='speech_area_field', on_change=atualizaUsado)
+
+#criando uma área para mostrar a quantidade de caracteres usada
+usado = st.empty()
+atualizaUsado()
 
 botSummary = st.button("Pressione aqui para a avaliação da redação com relação ao tema")
 if botSummary:
