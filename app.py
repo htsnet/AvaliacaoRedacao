@@ -61,11 +61,14 @@ def revise_text(tema, redacao, max_tokens, temperature):
     message = completions.choices[0].text
     return message
 
-def check_text(text1, text2):
-    if text1 and text2 and (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
-        return True
-    st.info('Um dos campos está vazio ou o tamanhos dos textos ultrapassou o limite viável!', icon="⚠️")
-    return False
+def check_text():
+    if not tema or not redacao:
+        st.info('Um dos campos está vazio!', icon="⚠️")
+        return False
+    if (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
+        st.info('O tamanho dos textos ultrapassou o limite viável!', icon="⚠️")
+        return False
+    return True 
 
 def atualizaUsado():
     usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/{limiteModelo}')
@@ -86,7 +89,7 @@ atualizaUsado()
 
 botSummary = st.button("Pressione aqui para a avaliação da redação com relação ao tema")
 if botSummary:
-    if check_text(tema, redacao):
+    if check_text():
         revised_text = revise_text(tema, redacao, max_tokens, temperature)
         st.write(revised_text)
         # readText(revised_text, language)
