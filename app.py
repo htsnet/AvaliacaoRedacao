@@ -62,7 +62,7 @@ def revise_text(tema, redacao, max_tokens, temperature):
     return message
 
 def check_text(text1, text2):
-    if text1 and text2 and (max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
+    if text1 and text2 and (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
         return True
     st.info('Um dos campos está vazio ou o tamanhos dos textos ultrapassou o limite viável!', icon="⚠️")
     return False
