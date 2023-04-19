@@ -69,7 +69,7 @@ def check_text(text1, text2):
 
 def atualizaUsado():
     usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/{limiteModelo}')
-    if max_tokens + len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final) > limiteModelo:
+    if limiteResposta + len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final) > limiteModelo:
         st.info('O tamanhos dos textos ultrapassou o limite possível!', icon="⚠️")
 
 # título
