@@ -17,23 +17,23 @@ with st.sidebar:
     
     # st.header('Parameters')
    
-    temperature = 0.7
+    temperature = 0.4
     # temperature = st.slider('Temperature', 0, 100, 50, 1)/100
     # st.write('Temperature for action. Smaller values are more accurate, larger values are riskier.')
     # st.markdown("""---""")
-    max_tokens = 4050
+    max_tokens = 4096
     # max_tokens = st.slider('Limit words', 10, 4000, 1000, 100)
     # st.write('Limit of words for the response.')
     
     prompt = ''
-    prompt_base = """Tópico: avaliação de redação.
-                    Persona: seja um professor de língua portuguesa e avalie a redação abaixo.
-                    Contexto: Redação de aluno do 1º ano do Ensino Médio do Brasil
-                    O que avaliar (num máximo de 100 pontos com as seguintes ponderações):
-                    Coerência do seu texto com as opções assinaladas (30pontos)
-                    Informações sobre as empresas, trabalhos e funções descritas (30pontos)
-                    Qualidade do texto (português, pontuação etc) (30pontos)
-                    Perspectivas futuras no estudo ou trabalho (10pontos)"""
+    prompt_base = """Você é um professor de língua portuguesa. 
+                    Ação: avaliar a redação do aluno do 1º ano do Ensino Médio do Brasil
+                    Critério: máximo de 100 pontos com as seguintes ponderações:
+                    a) Coerência do seu texto com as opções assinaladas :30pontos
+                    b) Informações sobre as empresas, trabalhos e funções descritas:30pontos
+                    c) Qualidade do texto (português, pontuação etc):30pontos
+                    d) Perspectivas futuras no estudo ou trabalho:10pontos
+                    Responder apenas a letra e a quantidade de pontos"""
     frase1 = "Tema: '"
     frase2 = "' Redação do aluno a ser avaliada: '"
     final = "'"
@@ -48,8 +48,9 @@ def revise_text(tema, redacao, max_tokens, temperature):
             engine="text-davinci-003",
             prompt=prompt + frase1 + tema + frase2 + redacao + final,
             max_tokens=max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final),
-            n=1,
-            stop=None,
+            top_p=1,
+            frequency_penalty=0.2,
+            presence_penalty=0
             temperature=temperature,
         )
 
@@ -63,7 +64,7 @@ def check_text(text1, text2):
     return False
 
 def atualizaUsado():
-    usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/4097')
+    usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/4096')
     if max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) <= 0:
         st.info('O tamanhos dos textos ultrapassou o limite possível!', icon="⚠️")
 
