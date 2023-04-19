@@ -73,7 +73,7 @@ def check_text():
 def atualizaUsado():
     usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/{limiteModelo}')
     if limiteResposta + len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final) > limiteModelo:
-        st.info('O tamanhos dos textos ultrapassou o limite possível!', icon="⚠️")
+        st.info('Atenção ao limite de texto possível!', icon="⚠️")
 
 # título
 Title = f'Avaliação de Redação (ChatGPT)'
