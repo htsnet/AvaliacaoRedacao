@@ -7,10 +7,10 @@ See this project on https://htsnet-avaliacaoredacao-app-4vysvn.streamlit.app/
 ![Alt text](tela_site.jpg)
 
 ------ Instructions ------
-pip install virtualenv
-python -m venv Ambiente_Virtual
-cd Ambiente_Virtual\Scripts
-activate
-cd ../..
-pip install <packages>
-streamlit run app.py
+pip install virtualenv  
+python -m venv Ambiente_Virtual  
+cd Ambiente_Virtual\Scripts  
+activate  
+cd ../..  
+pip install <packages>  
+streamlit run app.py  
