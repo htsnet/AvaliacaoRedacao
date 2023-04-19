@@ -62,7 +62,7 @@ def revise_text(tema, redacao, max_tokens, temperature):
     return message
 
 def check_text():
-    if not tema or not redacao:
+    if not (tema and redacao):
         st.info('Um dos campos está vazio!', icon="⚠️")
         return False
     if (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
@@ -79,7 +79,7 @@ def atualizaUsado():
 Title = f'Avaliação de Redação (ChatGPT)'
 st.title(Title)
 
-prompt = st.text_area("Tema", value=prompt_base, max_chars=800, height=200, key='prompt_area_field', on_change=atualizaUsado)
+prompt = st.text_area("Orientação", value=prompt_base, max_chars=800, height=200, key='prompt_area_field', on_change=atualizaUsado)
 tema = st.text_area("Tema", max_chars=800, height=100, key='theme_area_field', on_change=atualizaUsado)
 redacao = st.text_area("Redação", max_chars=3200, height=400, key='speech_area_field', on_change=atualizaUsado)
 
