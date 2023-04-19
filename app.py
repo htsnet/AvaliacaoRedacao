@@ -1,11 +1,11 @@
 import streamlit as st
 import openai
-from io import StringIO
-import pdfplumber
+# from io import StringIO
+# import pdfplumber
 # from gtts import gTTS
 # import pygame
-import re
-import time
+# import re
+# import time
 
 # Insira sua chave de API aqui
 openai.api_key = st.secrets['api_key_openai']
@@ -24,6 +24,9 @@ with st.sidebar:
     max_tokens = 4096
     # max_tokens = st.slider('Limit words', 10, 4000, 1000, 100)
     # st.write('Limit of words for the response.')
+    
+    limiteModelo = 4096
+    limiteResposta = 400
     
     prompt = ''
     prompt_base = """Você é um professor de língua portuguesa. 
@@ -47,10 +50,11 @@ def revise_text(tema, redacao, max_tokens, temperature):
         completions = openai.Completion.create(
             engine="text-davinci-003",
             prompt=prompt + frase1 + tema + frase2 + redacao + final,
-            max_tokens=max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final),
+            # max_tokens=max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final),
+            max_tokens=limiteResposta, # é suficiente para a resposta curta
             top_p=1,
             frequency_penalty=0.2,
-            presence_penalty=0
+            presence_penalty=0,
             temperature=temperature,
         )
 
@@ -58,14 +62,14 @@ def revise_text(tema, redacao, max_tokens, temperature):
     return message
 
 def check_text(text1, text2):
-    if text1 and text2 and (max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) > 0):
+    if text1 and text2 and (max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
         return True
     st.info('Um dos campos está vazio ou o tamanhos dos textos ultrapassou o limite viável!', icon="⚠️")
     return False
 
 def atualizaUsado():
-    usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/4096')
-    if max_tokens - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) <= 0:
+    usado.write(f'Caracteres usados: {len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final)}/{limiteModelo}')
+    if max_tokens + len(tema) + len(redacao) + len(prompt) + len(frase1) + len(frase2) + len(final) > limiteModelo:
         st.info('O tamanhos dos textos ultrapassou o limite possível!', icon="⚠️")
 
 # título

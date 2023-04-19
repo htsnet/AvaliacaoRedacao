@@ -1,4 +1,4 @@
 openai
-pdfplumber
-gtts
-pygame
+# pdfplumber
+# gtts
+# pygame
