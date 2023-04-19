@@ -65,7 +65,7 @@ def check_text():
     if not (tema and redacao):
         st.info('Um dos campos está vazio!', icon="⚠️")
         return False
-    if (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > 0):
+    if (limiteModelo - len(tema) - len(redacao) - len(prompt) - len(frase1) - len(frase2) - len(final) - limiteResposta > limiteModelo):
         st.info('O tamanho dos textos ultrapassou o limite viável!', icon="⚠️")
         return False
     return True 
